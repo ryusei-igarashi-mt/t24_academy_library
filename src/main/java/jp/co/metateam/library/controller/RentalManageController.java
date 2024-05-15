@@ -103,6 +103,7 @@ public class RentalManageController {
             return "redirect:/rental/add";
         }
     }   
+
     @GetMapping("/rental/{id}/edit")
     public String edit(@PathVariable("id") String id, Model model) {
         List <Account> accountList = this.accountService.findAll();
@@ -128,13 +129,13 @@ public class RentalManageController {
 
         return "rental/edit";
     }
+
     @PostMapping("/rental/{id}/edit")
     public String update(@PathVariable("id") String id, @Valid @ModelAttribute RentalManageDto rentalManageDto, BindingResult result, RedirectAttributes ra, Model model) {
         try {
             RentalManage rentalManage = this.rentalManageService.findById(Long.valueOf(id));
 
             Optional<String> statusError = rentalManageDto.isvalidStatus(rentalManage.getStatus());
-
             if (statusError.isPresent()){
                 FieldError fieldError = new FieldError("rentalManageDto","status",statusError.get());
 
@@ -146,25 +147,18 @@ public class RentalManageController {
             if (result.hasErrors()) {
                 throw new Exception("Validation error.");
             }
-            // 更新
+            
             rentalManageService.update(Long.valueOf(id), rentalManageDto);
 
             return "redirect:/rental/index";
         } catch (Exception e) {
-            List <Account> accountList = this.accountService.findAll();
-            List <Stock> stockList = this.stockService.findAll();
-
-            model.addAttribute("rentalStatus", RentalStatus.values());
-            model.addAttribute("accounts", accountList);
-            model.addAttribute("stockList", stockList);
 
             log.error(e.getMessage());
 
             ra.addFlashAttribute("rentalManageDto", rentalManageDto);
             ra.addFlashAttribute("org.springframework.validation.BindingResult.rentalManageDto", result);
 
-            return "rental/edit";
+            return "redirect:/rental/{id}/edit";
         }
     }
-
 }
