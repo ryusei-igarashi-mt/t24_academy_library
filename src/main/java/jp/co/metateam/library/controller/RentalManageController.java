@@ -133,18 +133,18 @@ public class RentalManageController {
     @PostMapping("/rental/{id}/edit")
     public String update(@PathVariable("id") String id, @Valid @ModelAttribute RentalManageDto rentalManageDto, BindingResult result, RedirectAttributes ra, Model model) {
         try {
+            if (result.hasErrors()) {
+                throw new Exception("Validation error.");
+            }
+
             RentalManage rentalManage = this.rentalManageService.findById(Long.valueOf(id));
 
             Optional<String> statusError = rentalManageDto.isvalidStatus(rentalManage.getStatus());
-            if (statusError.isPresent()){
+            if (statusError.isPresent()) {
                 FieldError fieldError = new FieldError("rentalManageDto","status",statusError.get());
 
                 result.addError(fieldError);
 
-                throw new Exception("Validation error.");
-            }
-
-            if (result.hasErrors()) {
                 throw new Exception("Validation error.");
             }
             
