@@ -55,34 +55,34 @@ public class RentalManageDto {
         String er = "貸出ステータスは%sから%sには変更できません";
 
         if (preStatus == RentalStatus.RENT_WAIT.getValue() && this.status == RentalStatus.RETURNED.getValue()) {
-            return Optional.of(String.format(er,"「貸出待ち」", "「返却済み」"));
+            return Optional.of(String.format(er, "「貸出待ち」", "「返却済み」"));
         }   
 
         if (preStatus == RentalStatus.RENTAlING.getValue()) { 
             if (this.status == RentalStatus.RENT_WAIT.getValue()) {
-                return Optional.of(String.format(er,"「貸出中」", "「貸出待ち」"));
+                return Optional.of(String.format(er, "「貸出中」", "「貸出待ち」"));
             } else if (this.status == RentalStatus.CANCELED.getValue()) {
-                return Optional.of(String.format(er,"「貸出中」", "「キャンセル」"));
+                return Optional.of(String.format(er, "「貸出中」", "「キャンセル」"));
             } 
         }
 
         if (preStatus == RentalStatus.RETURNED.getValue()) {
             if (this.status == RentalStatus.RENT_WAIT.getValue()) {
-                return Optional.of(String.format(er,"「返却済み」", "「貸出待ち」"));
+                return Optional.of(String.format(er, "「返却済み」", "「貸出待ち」"));
             } else if (this.status == RentalStatus.RENTAlING.getValue()) {
-                return Optional.of(String.format(er,"「返却済み」", "「貸出中」"));
+                return Optional.of(String.format(er, "「返却済み」", "「貸出中」"));
             } else if (this.status == RentalStatus.CANCELED.getValue()) {
-                return Optional.of(String.format(er,"「返却済み」", "「キャンセル」"));
+                return Optional.of(String.format(er, "「返却済み」", "「キャンセル」"));
             }
         }
 
         if (preStatus == RentalStatus.CANCELED.getValue()) {
             if (this.status == RentalStatus.RENT_WAIT.getValue()) {
-                return Optional.of(String.format(er,"「キャンセル」", "「貸出待ち」"));
+                return Optional.of(String.format(er, "「キャンセル」", "「貸出待ち」"));
             } else if (this.status == RentalStatus.RENTAlING.getValue()) {
-                return Optional.of(String.format(er,"「キャンセル」", "「貸出中」"));
+                return Optional.of(String.format(er, "「キャンセル」", "「貸出中」"));
             } else if (this.status == RentalStatus.RETURNED.getValue()) {
-                return Optional.of(String.format(er,"「キャンセル」", "「返却済み」"));
+                return Optional.of(String.format(er, "「キャンセル」", "「返却済み」"));
             }    
         }
            
